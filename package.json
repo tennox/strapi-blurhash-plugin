@@ -1,32 +1,48 @@
 {
-  "name": "strapi-blurhash",
-  "version": "1.1.1",
-  "description": "A plugin that generates blurhash for your uploaded images",
+  "name": "strapi-blurhash-plugin",
+  "version": "0.1.0",
+  "description": "A plugin that generates woltapp/blurhash for your uploaded images",
   "strapi": {
-    "name": "strapi-blurhash",
-    "description": "A plugin that generates blurhash for your uploaded images",
+    "name": "strapi-blurhash-plugin",
+    "description": "A plugin that generates woltapp/blurhash for your uploaded images",
     "kind": "plugin",
-    "displayName": "Strapi Blurhash"
+    "displayName": "Strapi Wolt Blurhash Plugin"
   },
   "dependencies": {
-    "plaiceholder": "^2.5.0"
+    "blurhash": "^2.0.5",
+    "sharp": "^0.32.5"
   },
   "peerDependencies": {
     "@strapi/strapi": "^4.0.0"
   },
-  "author": {
-    "name": "Emil Petras",
-    "url": "https://github.com/emil-petras"
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "@strapi/typescript-utils": "^4.6.0"
   },
-  "maintainers": [
+  "scripts": {
+    "develop": "tsc -p tsconfig.server.json -w",
+    "build": "tsc -p tsconfig.server.json"
+  },
+  "authors": [
     {
       "name": "Emil Petras",
       "url": "https://github.com/emil-petras"
+    },
+    {
+      "name": "Samuel Knutsen",
+      "url": "https://github.com/demonstrandum"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Samuel Knutsen",
+      "url": "https://github.com/demonstrandum"
     }
   ],
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "GPL-v3"
 }
