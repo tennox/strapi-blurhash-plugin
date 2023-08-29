@@ -25,5 +25,5 @@ export default ({ strapi }: { strapi: Strapi }) => {
         models: ['plugin::upload.file'],
         beforeCreate: (event) => generateBlurhash(event, 'beforeCreate'),
         beforeUpdate: (event) => generateBlurhash(event, 'beforeUpdate'),
-    });
+    } as any); // FIXME: remove this `as any` after https://github.com/strapi/strapi/pull/17847 is merged.
 };
