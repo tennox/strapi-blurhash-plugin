@@ -1,27 +1,29 @@
-# Strapi plugin strapi-blurhash
+# Strapi Plugin: `strapi-blurhash-plugin`
 
 A plugin for <a href="https://github.com/strapi/strapi">Strapi CMS</a> that generates blurhash for your uploaded images
+via the [woltapp/blurhash](https://github.com/woltapp/blurhash) algorithm.
 
 ## Installation
 
 To install, run:
 
-```bash
-npm install strapi-blurhash
+```sh
+npm install strapi-blurhash-plugin
 ```
 
-Open/create file `config/plugins.js`. Enable this plugin by adding:
+Open or create the `config/plugins.js` file. Enable this plugin by adding:
 
 ```js
 module.exports = {
-    ...
-    'strapi-blurhash': {
-      enabled: true,
-      config: {
-        regenerateOnUpdate: true
-      }
+    // ...
+    'strapi-blurhash-plugin': {
+        enabled: true,
+        config: {
+            regenerateOnUpdate: true
+        }
     },
-  }
+    // ...
+}
 ```
 
 ## How to generate blurhash for an image
