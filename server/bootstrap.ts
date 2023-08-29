@@ -1,22 +1,23 @@
 import { Strapi } from '@strapi/strapi';
 
-export default ({ strapi }: { strapi: Strapi }) => {
+const PLUGIN_NAME = 'strapi-blurhash-plugin';
 
+export default ({ strapi }: { strapi: Strapi }) => {
     const generateBlurhash = async (event, eventType) => {
         const { data, where } = event.params;
 
         if ((data.mime && data.mime.startsWith('image/'))) {
-            data.blurhash = await strapi.plugin('strapi-blurhash').service('blurhash').generateBlurhash(data.url);
+            data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(data.url);
         }
 
-        if (eventType === 'beforeUpdate' && strapi.plugin('strapi-blurhash').config('regenerateOnUpdate') === true) {
+        if (eventType === 'beforeUpdate' && strapi.plugin(PLUGIN_NAME).config('regenerateOnUpdate') === true) {
             const fullData = await strapi.db.query('plugin::upload.file').findOne({
                 select: ['url', 'blurhash', 'name', 'mime'],
                 where
             });
 
             if ((fullData.mime && fullData.mime.startsWith('image/')) && !fullData.blurhash) {
-                data.blurhash = await strapi.plugin('strapi-blurhash').service('blurhash').generateBlurhash(fullData.url);
+                data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(fullData.url);
             }
         }
     };
