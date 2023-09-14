@@ -1,6 +1,6 @@
 {
   "name": "strapi-blurhash-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A plugin that generates woltapp/blurhash for your uploaded images",
   "strapi": {
     "name": "strapi-blurhash-plugin",
@@ -50,5 +50,5 @@
     "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "GPL-3.0"
+  "license": "MIT"
 }

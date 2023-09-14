@@ -1,3 +1,9 @@
+# Dont ignore /dist
+
+# License file
+LICENSE
+
+# OS files
 .DS_Store
 .AppleDouble
 .LSOverride
