@@ -7,7 +7,7 @@ import { encode } from 'blurhash';
 
 const loadImage = (url: string): Promise<Buffer> => new Promise((resolve, reject) => {
     https.get(url, res => {
-        const data = [];
+        const data = new Array();
         res.on('data', chunk => data.push(chunk))
            .on('error', e => reject(e))
            .on('end', () => resolve(Buffer.concat(data)));
@@ -45,8 +45,12 @@ const testLoadAndEncode = async () => {
 };
 
 export default ({ strapi }: { strapi: Strapi }) => ({
-    async generateBlurhash(url) {
+    async generateBlurhash(file) {
         try {
+            const isPrivate = await strapi.plugin("upload").provider.isPrivate() ?? false
+            const { url } = isPrivate
+                ? await strapi.plugin("upload").provider.getSignedUrl(file)
+                : file;
             const image: Buffer = await loadImage(url);
             const hash = await encodeImage(image);
             return hash;
