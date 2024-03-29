@@ -1,14 +1,18 @@
 import { Strapi } from '@strapi/strapi';
 import { getAbsoluteServerUrl } from '@strapi/utils';
 
-import https from 'node:https';
+import http from 'node:http'; 
+import https from 'node:https'; 
 
 import sharp from 'sharp';
 import { encode } from 'blurhash';
 
 const loadImage = (uri: string): Promise<Buffer> => new Promise((resolve, reject) => {
-    const url = uri.startsWith('http') ? uri : `${getAbsoluteServerUrl(strapi.config)}/${uri}`;
-    https.get(url, res => {
+    let baseUrl = getAbsoluteServerUrl(strapi.config);
+    if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+    if (uri.startsWith('/')) uri = uri.slice(1)
+    let url = uri.startsWith('http') ? uri : `${baseUrl}/${uri}`;
+    (url.startsWith('https') ? https : http).get(url, res => {
         const data = [];
         res.on('data', chunk => data.push(chunk))
            .on('error', e => reject(e))
