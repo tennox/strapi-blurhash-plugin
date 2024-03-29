@@ -1,13 +1,15 @@
 import { Strapi } from '@strapi/strapi';
+import { getAbsoluteServerUrl } from '@strapi/utils';
 
 import https from 'node:https';
 
 import sharp from 'sharp';
 import { encode } from 'blurhash';
 
-const loadImage = (url: string): Promise<Buffer> => new Promise((resolve, reject) => {
+const loadImage = (uri: string): Promise<Buffer> => new Promise((resolve, reject) => {
+    const url = uri.startsWith('http') ? uri : `${getAbsoluteServerUrl(strapi.config)}/${uri}`;
     https.get(url, res => {
-        const data = new Array();
+        const data = [];
         res.on('data', chunk => data.push(chunk))
            .on('error', e => reject(e))
            .on('end', () => resolve(Buffer.concat(data)));
@@ -47,7 +49,7 @@ const testLoadAndEncode = async () => {
 export default ({ strapi }: { strapi: Strapi }) => ({
     async generateBlurhash(file) {
         try {
-            const isPrivate = await strapi.plugin("upload").provider.isPrivate() ?? false
+            const isPrivate = await strapi.plugin("upload").provider.isPrivate() ?? false;
             const { url } = isPrivate
                 ? await strapi.plugin("upload").provider.getSignedUrl(file)
                 : file;
