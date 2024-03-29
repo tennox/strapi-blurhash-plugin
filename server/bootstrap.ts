@@ -7,7 +7,7 @@ export default ({ strapi }: { strapi: Strapi }) => {
         const { data, where } = event.params;
 
         if ((data.mime && data.mime.startsWith('image/'))) {
-            data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(data.url);
+            data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(data);
         }
 
         if (eventType === 'beforeUpdate' && strapi.plugin(PLUGIN_NAME).config('regenerateOnUpdate') === true) {
@@ -17,7 +17,7 @@ export default ({ strapi }: { strapi: Strapi }) => {
             });
 
             if ((fullData.mime && fullData.mime.startsWith('image/')) && !fullData.blurhash) {
-                data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(fullData.url);
+                data.blurhash = await strapi.plugin(PLUGIN_NAME).service('blurhash').generateBlurhash(fullData);
             }
         }
     };
